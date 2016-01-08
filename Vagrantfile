@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y git schroot debootstrap wget mc
-    sudo mkdir -p /chroot/wheezy/mnt/src
+    sudo mkdir -p /chroot/wheezy/
     sudo debootstrap --arch amd64 wheezy /chroot/wheezy http://ftp.us.debian.org/debian
     sudo rsync -r /vagrant/provision/files/ /
     sudo sh -c "echo 'deb http://apt.readynas.com/packages/readynasos #{readynas_version} main dev' >> /chroot/wheezy/etc/apt/source.list"
@@ -23,6 +23,5 @@ Vagrant.configure(2) do |config|
     schroot -c R6 sudo -- apt-get install -y build-essential \
     libcppunit-dev autoconf automake autotools-dev autopoint libtool \
     libxml2-dev libsqlite3-dev pkg-config libsystemd-daemon-dev
-    sudo mount --bind -o umask=0,uid=vagrant,gid=vagrant /vagrant/src /chroot/wheezy/mnt/src
   SHELL
 end
